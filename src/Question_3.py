@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 # Load data
 N = 100 #number of data points
-poly_data = pd.read_csv('../datasets/Question_3_dataset/data_ex1.csv')
+poly_data = pd.read_csv('../datasets/Question_1_dataset/data_ex1.csv')
 
 #------------------------------------------------------#
 #  	   A) Deducing minimum (a*, b*) numerically        #

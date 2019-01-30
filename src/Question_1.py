@@ -6,10 +6,8 @@ import scipy.interpolate as interpolate
 from matplotlib import rcParams
 
 def find_polys_and_losses(x, y):
-	
 	#   Given datapoints x,y, this function returns predicted 
 	#	polynomials of orders 0 to 12
-    
     ks = range(13)
     predicted_polys = []
     losses = []
@@ -29,10 +27,8 @@ def find_polys_and_losses(x, y):
 
 
 def plot_predicted_polys(x, y, predicted_polys, dataset_label, save_to):
-	
 	#This function plots predicted polynomials along with 
 	#corresponding dataset x,y
-
     rcParams['figure.figsize'] = 12,35
     x_new = np.linspace(np.min(x), np.max(x) + 0.1, 200)
 
@@ -79,7 +75,7 @@ def plot_loss_against_k(save_to, losses, plot_title, y_label, losses2=None, plot
     plt.savefig(save_to) #save figure
 
 # Load data
-poly_data = pd.read_csv('../datasets/Question_3_dataset/data_ex1.csv')
+poly_data = pd.read_csv('../datasets/Question_1_dataset/data_ex1.csv')
 x, y = poly_data['x'], poly_data['y']
 
 #------------------------------------------------------#
@@ -135,3 +131,16 @@ for poly in predicted_polys_train: # loop through predicted polys
 plot_loss_against_k('../results/Question_1_results/l_train_and_l_test_for_all_k', 
 					losses_train, 'Loss_train and Loss_test against k', 'Loss_train',
                     losses_test, 'Loss_train and Loss_test against k', 'Loss_test')
+
+
+#------------------------------------------------------------------#
+#  				C) Order of polynomial P  						   #
+#------------------------------------------------------------------#
+
+# My guess is that the order of P is 2. 
+#It's coefficients are: [0.39284984, -0.38975863, 0.82121564] with higher order coefficients first.
+print("My guess is that the order of P is 2. \n \
+	It's coefficients are: [0.39284984, -0.38975863, 0.82121564]\
+	with higher order coefficients first.")
+# The polynomial of order 2 predicted using 100% of the dataset.
+print("\n " + str(predicted_polys[2])) 
