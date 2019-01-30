@@ -31,12 +31,12 @@ theta = np.array([1.8, 1.4]) # begin at (a0, b0) = (1.8, 1.4)
 param_norm = [] # will be used in estimating convergence and plotting
 
 for i in range(epochs):
-    param_norm.append(np.linalg.norm(theta - theta_min))
-    # Get predictions using current theta
-    predictions = x.dot(theta)
-    error_vector = y - predictions # Calculte error
-    grad_vector = -2/N * x.T.dot(error_vector) # Calculate gradients 
-    theta = theta - learn_rate*grad_vector # Modify theta
+	param_norm.append(np.linalg.norm(theta - theta_min))
+	# Get predictions using current theta
+	predictions = x.dot(theta)
+	error_vector = y - predictions # Calculte error
+	grad_vector = -2/N * x.T.dot(error_vector) # Calculate gradients 
+	theta = theta - learn_rate*grad_vector # Modify theta
 
 print("Gradient Descent algorithm:")
 print("		(a, b) = (" + str(theta[0]) + ", " + str(theta[1]) + ")") # print best (a,b) found by GD.
@@ -53,7 +53,7 @@ epochs_taken = np.where(np.array(param_norm) < eps)[0][0]
 distance_covered = param_norm[0] - eps # 'distance'
 conv_rate = distance_covered / epochs_taken 
 print("		||(a_n, b_n) - (a_*, b_*)|| --> 0 at average rate of: " + \
-      str(conv_rate) + " per epoch.")
+	  str(conv_rate) + " per epoch.")
 
 plt.figure(1)
 plt.plot(param_norm) # plot the evolution of || (a_n, b_n) - (a_*, b_*) || against epochs.
@@ -77,16 +77,16 @@ v_old = 0; #start with v_n of 0
 param_norm = [] # append norm of (a_n, b_n) - (a_*, b_*) to this on every iteration
 
 for i in range(epochs):
-    param_norm.append(np.linalg.norm(theta - theta_min))
-    # Get predictions using current theta
-    predictions = x.dot(theta)
-    error_vector = y - predictions # Calculte error
-    grad_vector = -2/N * x.T.dot(error_vector) # Calculate gradients
-    v_new = gamma * v_old + learn_rate * grad_vector
-    theta = theta - v_new # Modify theta
-    
-    #store v_new
-    v_old = v_new
+	param_norm.append(np.linalg.norm(theta - theta_min))
+	# Get predictions using current theta
+	predictions = x.dot(theta)
+	error_vector = y - predictions # Calculte error
+	grad_vector = -2/N * x.T.dot(error_vector) # Calculate gradients
+	v_new = gamma * v_old + learn_rate * grad_vector
+	theta = theta - v_new # Modify theta
+	
+	#store v_new
+	v_old = v_new
 
 print("\nMomentum algorithm:")
 print("		(a, b) = (" + str(theta[0]) + ", " + str(theta[1]) + ")") # print best (a,b) found by momentum
@@ -102,7 +102,7 @@ epochs_taken = np.where(np.array(param_norm) < eps)[0][0]
 distance_covered = param_norm[0] - eps # 'distance'
 conv_rate = distance_covered / epochs_taken 
 print("		||(a_n, b_n) - (a_*, b_*)|| --> 0 at average rate of: " + \
-      str(conv_rate) + " per epoch.")
+	  str(conv_rate) + " per epoch.")
 
 plt.figure(2)
 plt.plot(param_norm) # plot the evolution of || (a_n, b_n) - (a_*, b_*) || against epoch.
@@ -128,18 +128,18 @@ v_old = 0; #start with v_n of 0
 param_norm = [] # save norm of (a_n, b_n) - (a_*, b_*) on every iteration
 
 for i in range(epochs):
-    param_norm.append(np.linalg.norm(theta - theta_min))
-    theta_mod = theta - gamma*v_old # sort of 'future' theta. This is what differentiates Nesterov.
-    prediction_at_theta_mod = x.dot(theta_mod)
-    error_vector_at_theta_mod = y - prediction_at_theta_mod
-    
-    grad_vector_at_theta_mod = -2/N * x.T.dot(error_vector_at_theta_mod) # Calculate gradients
+	param_norm.append(np.linalg.norm(theta - theta_min))
+	theta_mod = theta - gamma*v_old # sort of 'future' theta. This is what differentiates Nesterov.
+	prediction_at_theta_mod = x.dot(theta_mod)
+	error_vector_at_theta_mod = y - prediction_at_theta_mod
+	
+	grad_vector_at_theta_mod = -2/N * x.T.dot(error_vector_at_theta_mod) # Calculate gradients
 
-    v_new = gamma * v_old + learn_rate * grad_vector_at_theta_mod
-    theta = theta - v_new # Modify theta
-    
-    #store v_new
-    v_old = v_new
+	v_new = gamma * v_old + learn_rate * grad_vector_at_theta_mod
+	theta = theta - v_new # Modify theta
+	
+	#store v_new
+	v_old = v_new
 
 print("\nNesterov algorithm:")
 print("		(a, b) = (" + str(theta[0]) + ", " + str(theta[1]) + ")") # print best (a,b) found by Nesterov
@@ -155,7 +155,7 @@ epochs_taken = np.where(np.array(param_norm) < eps)[0][0]
 distance_covered = param_norm[0] - eps # 'distance'
 conv_rate = distance_covered / epochs_taken 
 print("		||(a_n, b_n) - (a_*, b_*)|| --> 0 at average rate of: " + \
-      str(conv_rate) + " per epoch.")
+	  str(conv_rate) + " per epoch.")
 
 plt.figure(3)
 plt.plot(param_norm) # plot the evolution of || (a_n, b_n) - (a_*, b_*) || against epoch.
@@ -169,66 +169,79 @@ plt.savefig("../results/Question_3_results/nesterov_convergence")
 #------------------------------------------------------#
 #  	   D)  Other Gradient Descent Methods              #
 #------------------------------------------------------#
+import torch
+import torch.nn as nn
+import torch.utils.data as data_utils
 
-# import torch
-# import torch.nn as nn
-# import torch.utils.data as data_utils
+X = torch.tensor([poly_data['x']]).t()
+Y = torch.tensor([poly_data['y']]).t()
 
-# features = torch.tensor(x)
-# targets = torch.tensor(y)
-# train = data_utils.TensorDataset(features, targets)
-# train_loader = data_utils.DataLoader(train, batch_size=50, shuffle=True)
+# Function to initialize params of myModel to [1.8, 1.4] 
+#as required by question
+def init_weights(model):
+	model.weight.data.fill_(1.4)
+	model.bias.data.fill_(1.8)
 
-# theta_min = torch.tensor([-0.91372385, 1.356735], dtype=torch.float64) #found from 3a.
-# epochs = 500
-# param_norm = []
-# # Function to initialize params of myModel to [1.8, 1.4] 
-# #as required by question
-# def init_weights(model):
-# 	model.weight.data = torch.tensor([[1.8, 1.4]], dtype=torch.float64) 
+myModel = nn.Linear(1, 1) #define model
+lr = 0.05
 
-# # Have already added 1 to each data point so no need for bias parameter 
-# myModel = nn.Linear(2, 1, bias=False)
-# myModel.apply(init_weights) # manually set initial parameters
-# criterion = nn.MSELoss()
-# optimizer = torch.optim.Adam(myModel.parameters(), lr=0.05)
+def try_other_GD_methods(opt, name):
+	
+	# When called, this function tries the passed optimizer opt on the dataset
+	theta_min = torch.tensor([-0.91372385, 1.356735]) #found from 3a.
+	epochs = 3000 # number of epochs
+	param_norm = []
+	myModel.apply(init_weights) # manually set initial parameters
+	criterion = nn.MSELoss() # minimize the mean squared error
+	optimizer = opt
 
-# for epoch in range(epochs):
-# 	param_norm.append(np.linalg.norm(myModel.weight.data[0] - theta_min))
+	for epoch in range(epochs):
+		params = torch.tensor(list(myModel.parameters())) # get current params
+		params_switched = torch.tensor([params[1].item(), params[0].item()]) #switch order of params
+		diff = params_switched - theta_min
+		param_norm.append(np.linalg.norm(diff.numpy()))
 
-# 	for X, Y in train_loader:		
-# 		print("weights now")
-# 		print(myModel.weight.data)
-# 		print("\n")
-# 		optimizer.zero_grad() # set gradients to 0
-# 		#N,_,nX,nY = X.size()
-# 		score = myModel(X) # get predictions
-# 		#score = myModel(features)
-# 		loss = criterion(score, Y) # calculate loss
-# 		loss.backward() # gradients
-# 		optimizer.step() # modify parameters
+		optimizer.zero_grad() # set gradients to 0
+		score = myModel(X) # get predictions
+		loss = criterion(score, Y) # calculate loss
+		loss.backward() # gradients
+		optimizer.step() # modify parameters
 
-# best_theta = [myModel.weight.data[0][0].item(), myModel.weight.data[0][1].item()]
-# print("Adam algorithm:")
-# print("		(a, b) = (" + str(best_theta[0]) + ", " + str(theta[1]) + ")") # print best (a,b) found by Nesterov
-# print(myModel.weight.data)
-#-------------------------------------------------------------------------#
-#  	  B) iv) Rate of convergence of || (a_n, b_n) - (a_*, b_*) || to 0    #
-#	                 for Adam          	  	          #
-#-------------------------------------------------------------------------#
+	params = torch.tensor(list(myModel.parameters())).numpy()
+	best_theta = [params[1], params[0]]
+	print(name + ":")
+	print("		(a, b) = (" + str(best_theta[0]) + ", " + str(best_theta[1]) + ")") # print best (a,b) found
+	
+	eps = 1e-7 # choose epsilon very close to 0
+	# find how many epochs it takes for || (a_n, b_n) - (a_*, b_*) || < 1e-7
+	
+	if param_norm[-1] < eps:
+		epochs_taken = np.where(np.array(param_norm) < eps)[0][0]
+	else:
+		eps = param_norm[-1] #use bigger eps
+		epochs_taken = np.where(np.array(param_norm) <= eps)[0][0]
 
-# eps = 1e-7 # choose epsilon very close to 0
-# # find how many epochs it takes for || (a_n, b_n) - (a_*, b_*) || < 1e-7
-# epochs_taken = np.where(np.array(param_norm) < eps)[0][0]
-# distance_covered = param_norm[0] - eps # 'distance'
-# conv_rate = distance_covered / epochs_taken 
-# print("		||(a_n, b_n) - (a_*, b_*)|| --> 0 at average rate of: " + \
-#       str(conv_rate) + " per epoch.")
+	distance_covered = param_norm[0] - eps # 'distance'
+	conv_rate = distance_covered / epochs_taken 
+	print("		||(a_n, b_n) - (a_*, b_*)|| --> 0 at average rate of: " + \
+	  str(conv_rate) + " per epoch.")
 
-# plt.figure(4)
-# plt.plot(param_norm) # plot the evolution of || (a_n, b_n) - (a_*, b_*) || against epoch.
-# plt.grid()
-# plt.xlabel("Epoch", fontsize=14);
-# plt.ylabel("Norm of  theta - theta_min", fontsize=14);
-# plt.title("Nesterov algorithm evolution \n Convergence rate: " + str(conv_rate) + " per epoch");
-# plt.savefig("../results/Question_3_results/nesterov_convergence")
+	plt.figure()
+	plt.plot(param_norm) # plot the evolution of || (a_n, b_n) - (a_*, b_*) || against epoch.
+	plt.grid()
+	plt.xlabel("Epoch", fontsize=14);
+	plt.ylabel("Norm of  theta - theta_min", fontsize=14);
+	plt.title(name + " algorithm evolution \n Convergence rate: " + str(conv_rate) + " per epoch");
+	plt.savefig("../results/Question_3_results/" + name + "_convergence")
+
+
+# optimizers to try
+optimizers = [torch.optim.Adam(myModel.parameters(), lr=lr), 
+			  torch.optim.RMSprop(myModel.parameters(), lr=lr),
+			  torch.optim.Rprop(myModel.parameters(), lr=lr),
+			 torch.optim.Adamax(myModel.parameters(), lr=lr)]
+optimizer_names = ['Adam', 'RMSProp', 'Rprop', 'Adamax']
+
+print("\n Trying other algorithms from pytorch: \n")
+for i in range(len(optimizers)):
+	try_other_GD_methods(optimizers[i], optimizer_names[i])
