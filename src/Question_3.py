@@ -170,48 +170,48 @@ plt.savefig("../results/Question_3_results/nesterov_convergence")
 #  	   D)  Other Gradient Descent Methods              #
 #------------------------------------------------------#
 
-import torch
-import torch.nn as nn
-import torch.utils.data as data_utils
+# import torch
+# import torch.nn as nn
+# import torch.utils.data as data_utils
 
-features = torch.tensor(x)
-targets = torch.tensor(y)
-train = data_utils.TensorDataset(features, targets)
-train_loader = data_utils.DataLoader(train, batch_size=50, shuffle=True)
+# features = torch.tensor(x)
+# targets = torch.tensor(y)
+# train = data_utils.TensorDataset(features, targets)
+# train_loader = data_utils.DataLoader(train, batch_size=50, shuffle=True)
 
-theta_min = torch.tensor([-0.91372385, 1.356735], dtype=torch.float64) #found from 3a.
-epochs = 500
-param_norm = []
-# Function to initialize params of myModel to [1.8, 1.4] 
-#as required by question
-def init_weights(model):
-	model.weight.data = torch.tensor([[1.8, 1.4]], dtype=torch.float64) 
+# theta_min = torch.tensor([-0.91372385, 1.356735], dtype=torch.float64) #found from 3a.
+# epochs = 500
+# param_norm = []
+# # Function to initialize params of myModel to [1.8, 1.4] 
+# #as required by question
+# def init_weights(model):
+# 	model.weight.data = torch.tensor([[1.8, 1.4]], dtype=torch.float64) 
 
-# Have already added 1 to each data point so no need for bias parameter 
-myModel = nn.Linear(2, 1, bias=False)
-myModel.apply(init_weights) # manually set initial parameters
-criterion = nn.MSELoss()
-optimizer = torch.optim.Adam(myModel.parameters(), lr=0.05)
+# # Have already added 1 to each data point so no need for bias parameter 
+# myModel = nn.Linear(2, 1, bias=False)
+# myModel.apply(init_weights) # manually set initial parameters
+# criterion = nn.MSELoss()
+# optimizer = torch.optim.Adam(myModel.parameters(), lr=0.05)
 
-for epoch in range(epochs):
-	param_norm.append(np.linalg.norm(myModel.weight.data[0] - theta_min))
+# for epoch in range(epochs):
+# 	param_norm.append(np.linalg.norm(myModel.weight.data[0] - theta_min))
 
-	for X, Y in train_loader:		
-		print("weights now")
-		print(myModel.weight.data)
-		print("\n")
-		optimizer.zero_grad() # set gradients to 0
-		#N,_,nX,nY = X.size()
-		score = myModel(X) # get predictions
-		#score = myModel(features)
-		loss = criterion(score, Y) # calculate loss
-		loss.backward() # gradients
-		optimizer.step() # modify parameters
+# 	for X, Y in train_loader:		
+# 		print("weights now")
+# 		print(myModel.weight.data)
+# 		print("\n")
+# 		optimizer.zero_grad() # set gradients to 0
+# 		#N,_,nX,nY = X.size()
+# 		score = myModel(X) # get predictions
+# 		#score = myModel(features)
+# 		loss = criterion(score, Y) # calculate loss
+# 		loss.backward() # gradients
+# 		optimizer.step() # modify parameters
 
-best_theta = [myModel.weight.data[0][0].item(), myModel.weight.data[0][1].item()]
-print("Adam algorithm:")
-print("		(a, b) = (" + str(best_theta[0]) + ", " + str(theta[1]) + ")") # print best (a,b) found by Nesterov
-print(myModel.weight.data)
+# best_theta = [myModel.weight.data[0][0].item(), myModel.weight.data[0][1].item()]
+# print("Adam algorithm:")
+# print("		(a, b) = (" + str(best_theta[0]) + ", " + str(theta[1]) + ")") # print best (a,b) found by Nesterov
+# print(myModel.weight.data)
 #-------------------------------------------------------------------------#
 #  	  B) iv) Rate of convergence of || (a_n, b_n) - (a_*, b_*) || to 0    #
 #	                 for Adam          	  	          #
